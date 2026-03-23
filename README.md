@@ -1,2 +1,2 @@
 # bscpegrades_portal
-Organized summation of grades from BSCpE 1-A
+Organized summation of grades of BSCpE 1-A
