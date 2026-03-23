@@ -86,7 +86,7 @@
     <h2>Student Login</h2>
     <input type="text" id="username" placeholder="Username" />
     <input type="password" id="password" placeholder="Password" />
-    <button onclick="login()">Login</button>
+    <button id="loginBtn">Login</button>
     <p id="error" style="color:red"></p>
   </div>
 </div>
@@ -126,32 +126,39 @@
 </div>
 
 <script>
-  function login() {
-    const user = document.getElementById('username').value;
-    const pass = document.getElementById('password').value;
+// Attach event safely after DOM loads
+window.addEventListener('DOMContentLoaded', function() {
+  const btn = document.getElementById('loginBtn');
+
+  btn.addEventListener('click', function() {
+    const user = document.getElementById('username').value.trim();
+    const pass = document.getElementById('password').value.trim();
 
     if(user === "student" && pass === "1234") {
-      document.getElementById('loginPage').classList.add('hidden');
-      document.getElementById('dashboard').classList.remove('hidden');
+      document.getElementById('loginPage').style.display = "none";
+      document.getElementById('dashboard').style.display = "grid";
       loadChart();
     } else {
       document.getElementById('error').innerText = "Invalid login";
     }
-  }
+  });
+});
 
-  function loadChart() {
-    const ctx = document.getElementById('gradeChart');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['MATH','CHEM','CMPE111','CMPE112','GE115B','GE3AC','GE123','PE','NSTP','THEO'],
-        datasets: [{
-          label: 'Grades',
-          data: [1.9,1.3,1.4,1.6,1.2,1.3,1.3,1.1,1.5,1.4]
-        }]
-      }
-    });
-  }
+function loadChart() {
+  const ctx = document.getElementById('gradeChart');
+  if (!ctx || typeof Chart === 'undefined') return;
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['MATH','CHEM','CMPE111','CMPE112','GE115B','GE3AC','GE123','PE','NSTP','THEO'],
+      datasets: [{
+        label: 'Grades',
+        data: [1.9,1.3,1.4,1.6,1.2,1.3,1.3,1.1,1.5,1.4]
+      }]
+    }
+  });
+}
 </script>
 
 </body>
